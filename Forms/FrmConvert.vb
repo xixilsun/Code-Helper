@@ -3,6 +3,7 @@ Imports System.Windows.Forms
 Imports System.Drawing
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 Imports System.Resources.ResXFileRef
+Imports System.Text.RegularExpressions
 
 Public Class frmConvert
     Private InputQuery As String
@@ -43,7 +44,12 @@ Public Class frmConvert
 
             'Check converting language
             If fromLang = "VB.NET" AndAlso toLang = "SQL" Then
-                Converted &= If(Converted <> "", vbCrLf, "") & line.TrimStart().Replace(" & vbCrLf &", "").Replace(" & vbNewLine &", "").Replace(" _", "").Replace("""", "")
+                'Condition : Remove '" & SqlStr(xxx)' | Remove " & | Remove vbCrLf vbNewLine _, Replace with Backreference Group 2
+                'Condition : Remove excess spaces
+                line = Regex.Replace(line, "("" & SqlStr\((.*?)\))", "'$2'")
+                line = Regex.Replace(line, "([""&])|(vbCrLf|vbNewLine| _)", "")
+                line = Regex.Replace(line, " {2,}", " ")
+                Converted &= If(Converted <> "", vbCrLf, "") & line.Trim() '.Replace(" & vbCrLf &", "").Replace(" & vbNewLine &", "").Replace(" _", "").Replace("""", "").Replace
             ElseIf fromLang = "SQL" AndAlso toLang = "VB.NET" Then
                 Converted &= If(Converted <> "", vbCrLf, "") & """" & line & """" & If(i = InputArray.Count - 1, "", " & vbCrLf & _")
             End If
