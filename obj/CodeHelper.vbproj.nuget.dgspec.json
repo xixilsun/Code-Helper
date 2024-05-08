@@ -1,0 +1,70 @@
+{
+  "format": 1,
+  "restore": {
+    "X:\\WorkingCopy\\!Testing Project\\CodeHelper\\CodeHelper.vbproj": {}
+  },
+  "projects": {
+    "X:\\WorkingCopy\\!Testing Project\\CodeHelper\\CodeHelper.vbproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "X:\\WorkingCopy\\!Testing Project\\CodeHelper\\CodeHelper.vbproj",
+        "projectName": "CodeHelper",
+        "projectPath": "X:\\WorkingCopy\\!Testing Project\\CodeHelper\\CodeHelper.vbproj",
+        "packagesPath": "C:\\NUGET\\global_packages",
+        "outputPath": "X:\\WorkingCopy\\!Testing Project\\CodeHelper\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\S2209063\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net48"
+        ],
+        "sources": {
+          "\\\\172.18.3.167\\Nuget\\Package": {},
+          "\\\\172.18.3.167\\Nuget\\Package64": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net48": {
+            "projectReferences": {}
+          }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net48": {
+          "dependencies": {
+            "IDR.Common": {
+              "target": "Package",
+              "version": "[4.8.0, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-arm64": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    }
+  }
+}

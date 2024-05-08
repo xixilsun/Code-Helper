@@ -1,0 +1,42 @@
+X:\WorkingCopy\CodeHelper\obj\Debug\CodeHelper.vbproj.AssemblyReference.cache
+X:\WorkingCopy\CodeHelper\obj\Debug\CodeHelper.vbproj.CoreCompileInputs.cache
+X:\WorkingCopy\CodeHelper\obj\Debug\CodeHelper.FrmConvert.resources
+X:\WorkingCopy\CodeHelper\obj\Debug\CodeHelper.vbproj.GenerateResource.cache
+X:\WorkingCopy\CodeHelper\bin\Debug\CodeHelper.exe.config
+X:\WorkingCopy\CodeHelper\bin\Debug\CodeHelper.exe
+X:\WorkingCopy\CodeHelper\bin\Debug\CodeHelper.pdb
+X:\WorkingCopy\CodeHelper\obj\Debug\CodeHelper.exe
+X:\WorkingCopy\CodeHelper\obj\Debug\CodeHelper.pdb
+X:\WorkingCopy\CodeHelper\obj\Debug\CodeHelper.Resources.resources
+X:\WorkingCopy\CodeHelper\bin\Debug\IDR.Common.dll
+X:\WorkingCopy\CodeHelper\obj\Debug\CodeHelper.vbproj.Up2Date
+X:\WorkingCopy\CodeHelper\obj\Debug\CodeHelper.frmMain.resources
+X:\WorkingCopy\CodeHelper\obj\Debug\CodeHelper.FrmDatabaseHelper.resources
+X:\WorkingCopy\CodeHelper\bin\Debug\DevExpress.Data.v10.2.dll
+X:\WorkingCopy\CodeHelper\bin\Debug\DevExpress.Utils.v10.2.dll
+X:\WorkingCopy\CodeHelper\bin\Debug\DevExpress.XtraEditors.v10.2.dll
+X:\WorkingCopy\CodeHelper\bin\Debug\DevExpress.Data.v10.2.xml
+X:\WorkingCopy\CodeHelper\bin\Debug\DevExpress.Utils.v10.2.xml
+X:\WorkingCopy\CodeHelper\bin\Debug\DevExpress.XtraEditors.v10.2.xml
+X:\WorkingCopy\CodeHelper\obj\Debug\CodeHelper.exe.licenses
+X:\WorkingCopy\!Testing Project\CodeHelper\bin\Debug\CodeHelper.exe.config
+X:\WorkingCopy\!Testing Project\CodeHelper\bin\Debug\CodeHelper.exe
+X:\WorkingCopy\!Testing Project\CodeHelper\bin\Debug\CodeHelper.pdb
+X:\WorkingCopy\!Testing Project\CodeHelper\bin\Debug\IDR.Common.dll
+X:\WorkingCopy\!Testing Project\CodeHelper\bin\Debug\DevExpress.Data.v10.2.dll
+X:\WorkingCopy\!Testing Project\CodeHelper\bin\Debug\DevExpress.Utils.v10.2.dll
+X:\WorkingCopy\!Testing Project\CodeHelper\bin\Debug\DevExpress.XtraEditors.v10.2.dll
+X:\WorkingCopy\!Testing Project\CodeHelper\bin\Debug\DevExpress.Data.v10.2.xml
+X:\WorkingCopy\!Testing Project\CodeHelper\bin\Debug\DevExpress.Utils.v10.2.xml
+X:\WorkingCopy\!Testing Project\CodeHelper\bin\Debug\DevExpress.XtraEditors.v10.2.xml
+X:\WorkingCopy\!Testing Project\CodeHelper\obj\Debug\CodeHelper.vbproj.AssemblyReference.cache
+X:\WorkingCopy\!Testing Project\CodeHelper\obj\Debug\CodeHelper.frmConvert.resources
+X:\WorkingCopy\!Testing Project\CodeHelper\obj\Debug\CodeHelper.FrmDatabaseHelper.resources
+X:\WorkingCopy\!Testing Project\CodeHelper\obj\Debug\CodeHelper.frmMain.resources
+X:\WorkingCopy\!Testing Project\CodeHelper\obj\Debug\CodeHelper.Resources.resources
+X:\WorkingCopy\!Testing Project\CodeHelper\obj\Debug\CodeHelper.vbproj.GenerateResource.cache
+X:\WorkingCopy\!Testing Project\CodeHelper\obj\Debug\CodeHelper.exe.licenses
+X:\WorkingCopy\!Testing Project\CodeHelper\obj\Debug\CodeHelper.vbproj.CoreCompileInputs.cache
+X:\WorkingCopy\!Testing Project\CodeHelper\obj\Debug\CodeHelper.vbproj.Up2Date
+X:\WorkingCopy\!Testing Project\CodeHelper\obj\Debug\CodeHelper.exe
+X:\WorkingCopy\!Testing Project\CodeHelper\obj\Debug\CodeHelper.pdb

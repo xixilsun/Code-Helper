@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "xLhymGAP6QAjfdfFnWUgvVlHbjjHqM10YL3SQGHEb5jaDSJCZhNO14oM1PC48Ok2UoBDEjKuT3y/3YT3yEIhow==",
+  "success": true,
+  "projectFilePath": "X:\\WorkingCopy\\!Testing Project\\CodeHelper\\CodeHelper.vbproj",
+  "expectedPackageFiles": [
+    "C:\\NUGET\\global_packages\\idr.common\\4.8.0\\idr.common.4.8.0.nupkg.sha512"
+  ],
+  "logs": []
+}
