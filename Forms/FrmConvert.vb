@@ -44,9 +44,10 @@ Public Class frmConvert
 
             'Check converting language
             If fromLang = "VB.NET" AndAlso toLang = "SQL" Then
-                'Condition : Remove '" & SqlStr(xxx)' | Remove " & | Remove vbCrLf vbNewLine _, Replace with Backreference Group 2
+                'Condition : Replace '" & SqlStr(xxx)' | Remove D2Str with Backreference Group 2
+                'Condition : Remove '"&' | Remove vbCrLf vbNewLine _
                 'Condition : Remove excess spaces
-                line = Regex.Replace(line, "("" & SqlStr\((.*?)\))", "'$2'")
+                line = Regex.Replace(line, "("" & (SqlStr|D2Str)\((.*?)\))", "'$3'")
                 line = Regex.Replace(line, "([""&])|(vbCrLf|vbNewLine| _)", "")
                 line = Regex.Replace(line, " {2,}", " ")
                 Converted &= If(Converted <> "", vbCrLf, "") & line.Trim() '.Replace(" & vbCrLf &", "").Replace(" & vbNewLine &", "").Replace(" _", "").Replace("""", "").Replace
