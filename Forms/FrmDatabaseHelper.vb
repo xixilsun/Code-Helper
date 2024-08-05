@@ -1,32 +1,42 @@
-﻿Imports DevExpress.Xpo.DB.Helpers
-Imports IDR.Common
-Imports Microsoft.VisualBasic.ApplicationServices
+﻿Imports IDR.Common
+Imports System.Linq
 Imports System.Data
-Imports System.Data.SqlClient
 Imports System.Windows.Forms
+Imports System.Data.DataSetExtensions
+Imports System.Collections.Generic
 Public Class FrmDatabaseHelper
     Private Property IsFirstLoad As Boolean = True
+    Private _mainForm As frmMain
+
+    Public Property MainForm As frmMain
+        Get
+            Return _mainForm
+        End Get
+        Set(value As frmMain)
+            _mainForm = value
+        End Set
+    End Property
     Public Function GetConnectionString(databaseName As String) As String
         Return IDR.Common.modSQL.GetConnectionString("CodeHelper", "172.18.3.14", databaseName, "", "", True)
     End Function
 
     Private Sub FrmDatabaseHelper_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
-            txtServer.Text = "172.18.3.14"
-            Dim DatabaseName = modSQL.GetDataTable("SELECT name AS DatabaseName FROM sysdatabases WHERE name LIKE 'HRdb%'", GetConnectionString("Master"))
+            TxtServer.Text = "172.18.3.14"
+            Dim DatabaseDT As DataTable = modSQL.GetDataTable("SELECT name AS DatabaseName FROM sysdatabases WHERE name LIKE 'HRdb%'", GetConnectionString("Master"))
+            Dim DatabaseList As New List(Of String)
+
+            For Each row In DatabaseDT.Rows
+                DatabaseList.Add(row!DatabaseName)
+            Next
             With cboDatabase
-                .DataSource = DatabaseName
-                .DropDownStyle = ComboBoxStyle.DropDown
-                .AutoCompleteMode = AutoCompleteMode.SuggestAppend
-                .AutoCompleteSource = AutoCompleteSource.ListItems
-                .DisplayMember = "DatabaseName"
-                .ValueMember = "DatabaseName"
-                .SelectedIndex = 0
+                .Properties.Items.AddRange(DatabaseList)
+                .SelectedItem = "HRdb_PS"
             End With
 
             IsFirstLoad = False
             'Show table list
-            FillTableDropDownList(cboDatabase.SelectedValue)
+            FillTableDropDownList(cboDatabase.SelectedItem)
 
             Me.KeyPreview = True
         Catch ex As Exception
@@ -35,54 +45,57 @@ Public Class FrmDatabaseHelper
     End Sub
 
     Private Sub frmConvert_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
-        If e.Control AndAlso e.KeyCode = Keys.C Then
-            btnCopy_Click(sender, e)
-        ElseIf e.Shift AndAlso e.KeyCode = Keys.S Then
+        If e.Control AndAlso e.Shift AndAlso e.KeyCode = Keys.S Then
             btnSelect_Click(sender, e)
-        ElseIf e.Shift AndAlso e.KeyCode = Keys.I Then
+        ElseIf e.Control AndAlso e.Shift AndAlso e.KeyCode = Keys.I Then
             btnInsert_Click(sender, e)
-        ElseIf e.Shift AndAlso e.KeyCode = Keys.U Then
+        ElseIf e.Control AndAlso e.Shift AndAlso e.KeyCode = Keys.U Then
             btnUpdate_Click(sender, e)
-        ElseIf e.Shift AndAlso e.KeyCode = Keys.D Then
+        ElseIf e.Control AndAlso e.Shift AndAlso e.KeyCode = Keys.D Then
             btnDelete_Click(sender, e)
+        ElseIf e.Control AndAlso e.Shift AndAlso e.KeyCode = Keys.V Then
+            btnVariable_Click(sender, e)
+        ElseIf e.Control AndAlso e.Shift AndAlso e.KeyCode = Keys.P Then
+            btnParameter_Click(sender, e)
+        ElseIf e.Control AndAlso e.Shift AndAlso e.KeyCode = Keys.C Then
+            btnCreateTable_Click(sender, e)
+        ElseIf e.Control AndAlso e.KeyCode = Keys.C Then
+            btnCopy_Click(sender, e)
         ElseIf e.KeyCode = Keys.F5 Then
             btnConvert_Click(sender, e)
         End If
     End Sub
     Private Sub btnSelect_Click(sender As Object, e As EventArgs) Handles btnSelect.Click
-        txtQuery.Text = "SELECT " & GetColumnList(cboTable.SelectedValue, cboDatabase.SelectedValue) & " FROM " & cboTable.SelectedValue
+        txtQuery.Text = "SELECT " & GetColumnList(cboTable.SelectedItem, cboDatabase.SelectedItem) & " FROM " & cboTable.SelectedItem
     End Sub
 
     Private Sub btnInsert_Click(sender As Object, e As EventArgs) Handles btnInsert.Click
-        Dim ColumnList = GetColumnList(cboTable.SelectedValue, cboDatabase.SelectedValue)
-        Dim ParameterList = GetParameterList(cboTable.SelectedValue, cboDatabase.SelectedValue)
-        txtQuery.Text = "INSERT INTO " & cboTable.SelectedValue & "(" & ColumnList & ")" & vbCrLf &
+        Dim ColumnList = GetColumnList(cboTable.SelectedItem, cboDatabase.SelectedItem)
+        Dim ParameterList = GetParameterList(cboTable.SelectedItem, cboDatabase.SelectedItem)
+        txtQuery.Text = "INSERT INTO " & cboTable.SelectedItem & "(" & ColumnList & ")" & vbCrLf &
                          "VALUES (" & ParameterList & ")"
     End Sub
 
     Private Sub btnConvert_Click(sender As Object, e As EventArgs) Handles btnConvert.Click
-        Dim Form As New frmConvert
-        Form.InputText = txtQuery.Text
-        Form.ConvertInput(txtQuery.Text, "SQL", "VB.NET")
-        Form.Show()
+        _mainForm.ConvertSql(txtQuery.Text)
     End Sub
 
-    Private Sub cboDatabase_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDatabase.SelectedIndexChanged
+    Private Sub cboDatabase_SelectedIndexChanged(sender As Object, e As EventArgs)
         If Not IsFirstLoad Then
-            FillTableDropDownList(cboDatabase.SelectedValue)
+            FillTableDropDownList(cboDatabase.SelectedItem)
         End If
     End Sub
 
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
-        txtQuery.Text = "DELETE " & cboTable.SelectedValue & vbCrLf & "WHERE "
+        txtQuery.Text = "DELETE " & cboTable.SelectedItem & vbCrLf & "WHERE "
     End Sub
     Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnUpdate.Click
         Dim Sql = "SELECT column_name AS ColumnName, CONCAT('@',column_name) AS ParameterName" & vbCrLf &
                   "FROM INFORMATION_SCHEMA.COLUMNS" & vbCrLf &
-                  "WHERE TABLE_NAME = " & SqlStr(cboTable.SelectedValue)
-        Dim Dt As DataTable = GetDataTable(Sql, GetConnectionString(cboDatabase.SelectedValue))
+                  "WHERE TABLE_NAME = " & SqlStr(cboTable.SelectedItem)
+        Dim Dt As DataTable = GetDataTable(Sql, GetConnectionString(cboDatabase.SelectedItem))
 
-        Dim Output = "UPDATE " & cboTable.SelectedValue & vbCrLf & "SET "
+        Dim Output = "UPDATE " & cboTable.SelectedItem & vbCrLf & "SET "
 
         For Each row As DataRow In Dt.Rows
             Output &= vbCrLf & row!ColumnName & " = " & row!ParameterName
@@ -99,15 +112,15 @@ Public Class FrmDatabaseHelper
                   "FROM INFORMATION_SCHEMA.TABLES" & vbCrLf &
                   "WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_CATALOG = " & SqlStr(databaseName) & vbCrLf &
                   "ORDER BY TableName"
-        Dim TableNames = modSQL.GetDataTable(sql, GetConnectionString(databaseName))
+        Dim TableDT As DataTable = modSQL.GetDataTable(sql, GetConnectionString(databaseName))
+        Dim TableList As New List(Of String)
+        For Each row In TableDT.Rows
+            TableList.Add(row!TableName)
+        Next
+
         With cboTable
-            .DataSource = TableNames
-            .DropDownStyle = ComboBoxStyle.DropDown
-            .AutoCompleteMode = AutoCompleteMode.SuggestAppend
-            .AutoCompleteSource = AutoCompleteSource.ListItems
-            .DisplayMember = "TableName"
-            .ValueMember = "TableName"
-            .SelectedIndex = 0
+            .Properties.Items.AddRange(TableList)
+            .SelectedItem = "STAFF"
         End With
     End Sub
 
@@ -146,8 +159,8 @@ Public Class FrmDatabaseHelper
         Dim Sql = "SELECT COLUMN_NAME AS ColumnName, CONCAT('@', COLUMN_NAME) AS ParameterName, " & vbCrLf &
                   "CONCAT('SqlDbType.',DATA_TYPE , CASE WHEN CHARACTER_MAXIMUM_LENGTH IS NOT NULL THEN CONCAT(', ', CHARACTER_MAXIMUM_LENGTH) ELSE '' END) AS DataType" & vbCrLf &
                   "FROM INFORMATION_SCHEMA.COLUMNS " & vbCrLf &
-                  "WHERE TABLE_NAME = " & SqlStr(cboTable.SelectedValue)
-        Dim Dt As DataTable = modSQL.GetDataTable(Sql, GetConnectionString(cboDatabase.SelectedValue))
+                  "WHERE TABLE_NAME = " & SqlStr(cboTable.SelectedItem)
+        Dim Dt As DataTable = modSQL.GetDataTable(Sql, GetConnectionString(cboDatabase.SelectedItem))
 
         If Dt.Rows.Count <= 0 Then Exit Sub
 
@@ -159,7 +172,7 @@ Public Class FrmDatabaseHelper
         Output &= vbCrLf
 
         For Each Row As DataRow In Dt.Rows
-            Output &= vbCrLf & $"Cmd.Parameters(""{Row!ParameterName}"").Value = {cboTable.SelectedValue}.{Row!ColumnName}"
+            Output &= vbCrLf & $"Cmd.Parameters(""{Row!ParameterName}"").Value = {cboTable.SelectedItem}.{Row!ColumnName}"
         Next
 
         txtQuery.Text = Output
@@ -169,8 +182,8 @@ Public Class FrmDatabaseHelper
         Dim Sql = "SELECT CONCAT('@', COLUMN_NAME) AS ParameterName," & vbCrLf &
                   "CONCAT('DECLARE @', COLUMN_NAME, ' AS ', DATA_TYPE, CASE WHEN CHARACTER_MAXIMUM_LENGTH IS NOT NULL THEN CONCAT('(', CHARACTER_MAXIMUM_LENGTH, ')') END) AS Result" & vbCrLf &
                   "FROM INFORMATION_SCHEMA.COLUMNS" & vbCrLf &
-                  "WHERE TABLE_NAME = " & SqlStr(cboTable.SelectedValue)
-        Dim Dt As DataTable = modSQL.GetDataTable(Sql, GetConnectionString(cboDatabase.SelectedValue))
+                  "WHERE TABLE_NAME = " & SqlStr(cboTable.SelectedItem)
+        Dim Dt As DataTable = modSQL.GetDataTable(Sql, GetConnectionString(cboDatabase.SelectedItem))
 
         If Dt.Rows.Count <= 0 Then Exit Sub
 
@@ -192,7 +205,7 @@ Public Class FrmDatabaseHelper
     Private Sub btnCreateTable_Click(sender As Object, e As EventArgs) Handles btnCreateTable.Click
         Try
             Dim Sql = "DECLARE @table_name SYSNAME" & vbCrLf &
-                      "SELECT @table_name = " & SqlStr("dbo." & cboTable.SelectedValue) & vbCrLf &
+                      "SELECT @table_name = " & SqlStr("dbo." & cboTable.SelectedItem) & vbCrLf &
                       "DECLARE " & vbCrLf &
                       "      @object_name SYSNAME" & vbCrLf &
                       "    , @object_id INT" & vbCrLf &
@@ -330,12 +343,28 @@ Public Class FrmDatabaseHelper
                       "        FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)')" & vbCrLf &
                       "    ), '')" & vbCrLf &
                       "SELECT @SQL"
-            Dim Output = modSQL.GetOneData(Sql, "", GetConnectionString(cboDatabase.SelectedValue))
+            Dim Output = modSQL.GetOneData(Sql, "", GetConnectionString(cboDatabase.SelectedItem))
             txtQuery.Text = Output.Replace(vbCr, vbCrLf)
             Dim x = ""
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical)
         End Try
+    End Sub
+
+    Private Sub cboDatabase_SelectedIndexChanged_1(sender As Object, e As EventArgs) Handles cboDatabase.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub ComboBoxEdit1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboTable.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub Label2_Click(sender As Object, e As EventArgs) Handles Label2.Click
+
+    End Sub
+
+    Private Sub Label3_Click(sender As Object, e As EventArgs) Handles Label3.Click
+
     End Sub
 
 #End Region

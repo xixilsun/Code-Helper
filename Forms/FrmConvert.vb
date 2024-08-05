@@ -60,11 +60,16 @@ Public Class frmConvert
         txtInput.Text = Converted
     End Sub
 
-    Private Sub btnSwitch_Click(sender As Object, e As EventArgs) Handles btnSwitch.Click
+    Public Sub btnSwitch_Click(sender As Object, e As EventArgs) Handles btnSwitch.Click
         Dim temp = txtFrom.Text
         txtFrom.Text = txtTo.Text
         txtTo.Text = temp
 
+        If txtFrom.Text = "SQL" Then
+            txtFrom.Location = New Point(327, 20)
+        Else
+            txtFrom.Location = New Point(300, 20)
+        End If
         txtInput.Clear()
         btnCopy.Image = CodeHelper.My.Resources.Resources.copy
     End Sub
@@ -80,6 +85,8 @@ Public Class frmConvert
             btnCopy_Click(sender, e)
         ElseIf e.Control AndAlso e.KeyCode = Keys.S Then
             btnSwitch_Click(sender, e)
+        ElseIf e.Control AndAlso e.KeyCode = Keys.R Then
+            btnReplace_Click(sender, e)
         ElseIf e.KeyCode = Keys.F5 Then
             btnConvert_Click(sender, e)
         End If
@@ -114,5 +121,22 @@ Public Class frmConvert
             Output &= If(i > 0, vbCrLf & Spaces, "") & InputArray(i).TrimStart()
         Next
         txtInput.Text = Output
+    End Sub
+
+    Private Sub btnReplace_Click(sender As Object, e As EventArgs) Handles btnReplace.Click
+        Dim query As String = txtInput.Text
+        If txtReplaceTo.Text.ToUpper = "VBCRLF" OrElse txtReplaceTo.Text.ToUpper = "VBNEWLINE" OrElse txtReplaceTo.Text.ToUpper = "VBCR" Then
+            query = query.Replace(txtReplaceFrom.Text, vbCrLf)
+        ElseIf txtReplaceTo.Text.ToUpper = "VBTAB" Then
+            query = query.Replace(txtReplaceFrom.Text, vbTab)
+        Else
+            query = query.Replace(txtReplaceFrom.Text, txtReplaceTo.Text)
+        End If
+        txtInput.Text = query
+
+    End Sub
+
+    Private Sub txtFrom_Click(sender As Object, e As EventArgs) Handles txtFrom.Click
+
     End Sub
 End Class

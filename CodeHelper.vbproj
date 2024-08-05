@@ -65,7 +65,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>CodeHelper.FrmDatabaseHelper</StartupObject>
+    <StartupObject>CodeHelper.frmMain</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Visual_Code_icon-icons.com_56584.ico</ApplicationIcon>

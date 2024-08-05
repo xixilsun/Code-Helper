@@ -24,10 +24,7 @@ Partial Class FrmDatabaseHelper
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmDatabaseHelper))
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.txtServer = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.cboDatabase = New System.Windows.Forms.ComboBox()
-        Me.cboTable = New System.Windows.Forms.ComboBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtQuery = New System.Windows.Forms.TextBox()
         Me.btnSelect = New DevExpress.XtraEditors.SimpleButton()
@@ -38,10 +35,16 @@ Partial Class FrmDatabaseHelper
         Me.txtLabel1 = New System.Windows.Forms.Label()
         Me.btnConvert = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.btnParameter = New DevExpress.XtraEditors.SimpleButton()
-        Me.btnVariable = New DevExpress.XtraEditors.SimpleButton()
         Me.btnCreateTable = New DevExpress.XtraEditors.SimpleButton()
+        Me.btnVariable = New DevExpress.XtraEditors.SimpleButton()
+        Me.btnParameter = New DevExpress.XtraEditors.SimpleButton()
+        Me.cboDatabase = New DevExpress.XtraEditors.ComboBoxEdit()
+        Me.cboTable = New DevExpress.XtraEditors.ComboBoxEdit()
+        Me.TxtServer = New DevExpress.XtraEditors.TextEdit()
         Me.GroupBox1.SuspendLayout()
+        CType(Me.cboDatabase.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.cboTable.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TxtServer.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label1
@@ -54,50 +57,21 @@ Partial Class FrmDatabaseHelper
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Server"
         '
-        'txtServer
-        '
-        Me.txtServer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.txtServer.Font = New System.Drawing.Font("Arial", 8.25!)
-        Me.txtServer.Location = New System.Drawing.Point(60, 12)
-        Me.txtServer.Margin = New System.Windows.Forms.Padding(10)
-        Me.txtServer.Name = "txtServer"
-        Me.txtServer.Size = New System.Drawing.Size(111, 20)
-        Me.txtServer.TabIndex = 1
-        '
         'Label2
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Arial", 8.25!)
-        Me.Label2.Location = New System.Drawing.Point(206, 15)
+        Me.Label2.Location = New System.Drawing.Point(232, 15)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(53, 14)
         Me.Label2.TabIndex = 2
         Me.Label2.Text = "Database"
         '
-        'cboDatabase
-        '
-        Me.cboDatabase.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.cboDatabase.Font = New System.Drawing.Font("Arial", 8.0!)
-        Me.cboDatabase.FormattingEnabled = True
-        Me.cboDatabase.Location = New System.Drawing.Point(265, 10)
-        Me.cboDatabase.Name = "cboDatabase"
-        Me.cboDatabase.Size = New System.Drawing.Size(121, 22)
-        Me.cboDatabase.TabIndex = 2
-        '
-        'cboTable
-        '
-        Me.cboTable.Font = New System.Drawing.Font("Arial", 8.0!)
-        Me.cboTable.FormattingEnabled = True
-        Me.cboTable.Location = New System.Drawing.Point(454, 10)
-        Me.cboTable.Name = "cboTable"
-        Me.cboTable.Size = New System.Drawing.Size(121, 22)
-        Me.cboTable.TabIndex = 3
-        '
         'Label3
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Arial", 8.25!)
-        Me.Label3.Location = New System.Drawing.Point(416, 14)
+        Me.Label3.Location = New System.Drawing.Point(442, 14)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(32, 14)
         Me.Label3.TabIndex = 4
@@ -113,7 +87,7 @@ Partial Class FrmDatabaseHelper
         Me.txtQuery.Multiline = True
         Me.txtQuery.Name = "txtQuery"
         Me.txtQuery.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtQuery.Size = New System.Drawing.Size(865, 389)
+        Me.txtQuery.Size = New System.Drawing.Size(832, 389)
         Me.txtQuery.TabIndex = 10
         '
         'btnSelect
@@ -160,7 +134,7 @@ Partial Class FrmDatabaseHelper
         '
         Me.btnCopy.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.btnCopy.Image = Global.CodeHelper.My.Resources.Resources.copy
-        Me.btnCopy.Location = New System.Drawing.Point(848, 128)
+        Me.btnCopy.Location = New System.Drawing.Point(798, 128)
         Me.btnCopy.Name = "btnCopy"
         Me.btnCopy.Size = New System.Drawing.Size(32, 23)
         Me.btnCopy.TabIndex = 9
@@ -180,7 +154,7 @@ Partial Class FrmDatabaseHelper
         '
         Me.btnConvert.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.btnConvert.Font = New System.Drawing.Font("Arial", 8.25!)
-        Me.btnConvert.Location = New System.Drawing.Point(715, 128)
+        Me.btnConvert.Location = New System.Drawing.Point(665, 128)
         Me.btnConvert.Name = "btnConvert"
         Me.btnConvert.Size = New System.Drawing.Size(125, 23)
         Me.btnConvert.TabIndex = 8
@@ -198,30 +172,10 @@ Partial Class FrmDatabaseHelper
         Me.GroupBox1.Controls.Add(Me.btnUpdate)
         Me.GroupBox1.Location = New System.Drawing.Point(15, 45)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(865, 68)
+        Me.GroupBox1.Size = New System.Drawing.Size(815, 68)
         Me.GroupBox1.TabIndex = 15
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Action"
-        '
-        'btnParameter
-        '
-        Me.btnParameter.Appearance.Font = New System.Drawing.Font("Arial", 8.5!)
-        Me.btnParameter.Appearance.Options.UseFont = True
-        Me.btnParameter.Location = New System.Drawing.Point(470, 28)
-        Me.btnParameter.Name = "btnParameter"
-        Me.btnParameter.Size = New System.Drawing.Size(75, 23)
-        Me.btnParameter.TabIndex = 8
-        Me.btnParameter.Text = "&PARAMETER"
-        '
-        'btnVariable
-        '
-        Me.btnVariable.Appearance.Font = New System.Drawing.Font("Arial", 8.5!)
-        Me.btnVariable.Appearance.Options.UseFont = True
-        Me.btnVariable.Location = New System.Drawing.Point(380, 28)
-        Me.btnVariable.Name = "btnVariable"
-        Me.btnVariable.Size = New System.Drawing.Size(75, 23)
-        Me.btnVariable.TabIndex = 9
-        Me.btnVariable.Text = "&VARIABLE"
         '
         'btnCreateTable
         '
@@ -233,21 +187,64 @@ Partial Class FrmDatabaseHelper
         Me.btnCreateTable.TabIndex = 10
         Me.btnCreateTable.Text = "&CREATE"
         '
+        'btnVariable
+        '
+        Me.btnVariable.Appearance.Font = New System.Drawing.Font("Arial", 8.5!)
+        Me.btnVariable.Appearance.Options.UseFont = True
+        Me.btnVariable.Location = New System.Drawing.Point(380, 28)
+        Me.btnVariable.Name = "btnVariable"
+        Me.btnVariable.Size = New System.Drawing.Size(75, 23)
+        Me.btnVariable.TabIndex = 9
+        Me.btnVariable.Text = "&VARIABLE"
+        '
+        'btnParameter
+        '
+        Me.btnParameter.Appearance.Font = New System.Drawing.Font("Arial", 8.5!)
+        Me.btnParameter.Appearance.Options.UseFont = True
+        Me.btnParameter.Location = New System.Drawing.Point(470, 28)
+        Me.btnParameter.Name = "btnParameter"
+        Me.btnParameter.Size = New System.Drawing.Size(75, 23)
+        Me.btnParameter.TabIndex = 8
+        Me.btnParameter.Text = "&PARAMETER"
+        '
+        'cboDatabase
+        '
+        Me.cboDatabase.Location = New System.Drawing.Point(291, 11)
+        Me.cboDatabase.Name = "cboDatabase"
+        Me.cboDatabase.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.cboDatabase.Size = New System.Drawing.Size(122, 20)
+        Me.cboDatabase.TabIndex = 16
+        '
+        'cboTable
+        '
+        Me.cboTable.Location = New System.Drawing.Point(480, 11)
+        Me.cboTable.Name = "cboTable"
+        Me.cboTable.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.cboTable.Size = New System.Drawing.Size(122, 20)
+        Me.cboTable.TabIndex = 17
+        '
+        'TxtServer
+        '
+        Me.TxtServer.Location = New System.Drawing.Point(79, 11)
+        Me.TxtServer.Name = "TxtServer"
+        Me.TxtServer.Size = New System.Drawing.Size(117, 20)
+        Me.TxtServer.TabIndex = 18
+        '
         'FrmDatabaseHelper
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(899, 569)
+        Me.ClientSize = New System.Drawing.Size(856, 566)
+        Me.Controls.Add(Me.TxtServer)
+        Me.Controls.Add(Me.cboTable)
+        Me.Controls.Add(Me.cboDatabase)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.btnConvert)
         Me.Controls.Add(Me.btnCopy)
         Me.Controls.Add(Me.txtLabel1)
         Me.Controls.Add(Me.txtQuery)
-        Me.Controls.Add(Me.cboTable)
         Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.cboDatabase)
         Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.txtServer)
         Me.Controls.Add(Me.Label1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -257,16 +254,16 @@ Partial Class FrmDatabaseHelper
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "FrmDatabaseHelper"
         Me.GroupBox1.ResumeLayout(False)
+        CType(Me.cboDatabase.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.cboTable.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TxtServer.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents Label1 As Windows.Forms.Label
-    Friend WithEvents txtServer As Windows.Forms.TextBox
     Friend WithEvents Label2 As Windows.Forms.Label
-    Friend WithEvents cboDatabase As Windows.Forms.ComboBox
-    Friend WithEvents cboTable As Windows.Forms.ComboBox
     Friend WithEvents Label3 As Windows.Forms.Label
     Friend WithEvents txtQuery As Windows.Forms.TextBox
     Friend WithEvents btnSelect As DevExpress.XtraEditors.SimpleButton
@@ -280,4 +277,7 @@ Partial Class FrmDatabaseHelper
     Friend WithEvents btnParameter As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents btnVariable As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents btnCreateTable As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents cboDatabase As DevExpress.XtraEditors.ComboBoxEdit
+    Friend WithEvents cboTable As DevExpress.XtraEditors.ComboBoxEdit
+    Friend WithEvents TxtServer As DevExpress.XtraEditors.TextEdit
 End Class
